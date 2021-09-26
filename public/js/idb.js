@@ -20,7 +20,7 @@ request.onsuccess = function (event) {
   // verify whether app is online
   if (navigator.onLine) {
     // if yes, run uploadTransaction function to send all local db data to api
-    // uploadTransaction();
+    uploadTransaction();
   }
 };
 
@@ -39,4 +39,47 @@ function saveRecord(record) {
 
   // add record to your store with add method
   transactionObjectStore.add(record);
+}
+
+function uploadTransaction() {
+  // open a db transaction
+  const transaction = db.transaction(['new_transaction'], 'readwrite');
+
+  // access object store
+  const transactionObjectStore = transaction.objectStore('new_transaction');
+
+  // get records from object store and set to a variable
+  const getAll = transactionObjectStore.getAll();
+
+  // on .getAll() execution, run the below
+  getAll.onsuccess = function () {
+    // verify whether data is in IndexedDB store, send to api accordingly
+    if (getAll.result.length > 0) {
+      fetch('api/transaction', {
+        method: 'POST',
+        body: JSON.stringify(getAll.result),
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(serverResponse => {
+        if (serverResponse.message) {
+          throw new Error(serverResponse);
+        }
+        // open another db transaction
+        const transaction = db.transaction(['new_transaction'], 'readwrite');
+        // access new_transaction object store
+        const transactionObjectStore = transaction.objectStore('new_transaction');
+        // clear items in object store to prevent duplicating transactions on future reconnections
+        transactionObjectStore.clear();
+
+        alert('All saved transactions have been submitted!');
+      })
+      .catch(err => {
+        console.log(err)
+      });
+    }
+  }
 }
