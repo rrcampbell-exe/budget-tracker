@@ -4,12 +4,10 @@ const CACHE_NAME = APP_PREFIX + VERSION;
 
 // declaring which  files to cache for app functionality
 const FILES_TO_CACHE = [
-  "./models/transaction.js",
-  "./public/css/styles.css",
-  "./public/js/idb.js",
-  "./public/js/index.js",
-  "./public/index.html",
-  "./server.js",
+  "./css/styles.css",
+  "./js/idb.js",
+  "./js/index.js",
+  "./index.html"
 ];
 
 // event listener for service worker installation
