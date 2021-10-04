@@ -17,7 +17,9 @@ An application that permits users to track withdrawals and deposits with or with
 ![A screenshot of the Budget Tracker application](./public/budget-tracker.jpg)
 
 ## Usage
-Enter the name of a transaction in the field provided, followed by a transaction amount in the adjacent field. Then, if this transaction is a deposit, click the "Add Funds" button. Otherwise, click the "Subtract Funds" button. 
+Visit [https://campbell-budget-tracker.herokuapp.com/](https://campbell-budget-tracker.herokuapp.com/) to interact with this application.
+
+Once at this location, enter the name of a transaction in the field provided, followed by a transaction amount in the adjacent field. Then, if this transaction is a deposit, click the "Add Funds" button. Otherwise, click the "Subtract Funds" button. 
 
 To test the offline functionality, open the Network tab in Chrome DevTools and set the connection to "Offline." Then perform the aforementioned tasks before returning the connection in the Network tab to "No throttling." The application will then reconnect to the database and save transactions craeted while the app was offline.
 
